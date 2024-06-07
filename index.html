@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookshelf</title>
+    <link rel="stylesheet" href="output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header class="w-full p-4">
+      <nav class="flex justify-end">
+        <ul class="flex flex-row gap-4">
+          <li
+            class="border-2 border-gray-300 rounded-2xl hover:bg-black hover:text-white transition duration-100"
+          >
+            <a
+              class="p-4 font-semibold flex items-center h-4"
+              href="#"
+              id="openModalAddBook"
+              >Tambah Data Buku</a
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              placeholder="Masukkan Judul"
+              class="border rounded-2xl w-full bg-gray-50 h-10 flex items-center p-4"
+              id="searchBox"
+            />
+          </li>
+          <li
+            class="border-2 border-gray-300 rounded-2xl hover:bg-black hover:text-white transition duration-100"
+          >
+            <a
+              class="p-4 font-semibold flex items-center h-4"
+              href="#"
+              id="searchButton"
+              >Cari Buku</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div
+        id="addBook"
+        class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center"
+      >
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold" id="title-form">Tambah Buku</h2>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+              &times;
+            </button>
+          </div>
+          <form action="#" id="form">
+            <i class="jos" id="jos"></i>
+            <div class="flex flex-col">
+              <label for="title">Judul</label>
+              <input
+                type="text"
+                placeholder="Masukkan Judul"
+                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                id="title"
+              />
+            </div>
+            <div class="flex flex-col">
+              <label for="author">Penulis</label>
+              <input
+                type="text"
+                placeholder="Masukkan Penulis"
+                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                id="author"
+              />
+            </div>
+            <div class="flex flex-col">
+              <label for="year">Tahun</label>
+              <input
+                type="number"
+                placeholder="Masukkan Tahun"
+                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                id="year"
+                min="1900"
+                max="2100"
+                step="1"
+              />
+            </div>
+            <div class="flex flex-row">
+              <input type="checkbox" value="isRead" id="status" />
+              <label for="status">Selesai Dibaca</label>
+            </div>
+            <input
+              type="submit"
+              class="w-full border rounded h-10 hover:cursor-pointer hover:bg-green-800 hover:text-white transition duration-100"
+              value="Submit"
+              id="submit-btn"
+            />
+          </form>
+        </div>
+      </div>
+      <div
+        id="editBook"
+        class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center"
+      >
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold" id="title-form">Edit Buku</h2>
+            <button
+              id="closeModalEdit"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              &times;
+            </button>
+          </div>
+          <form action="#" id="form">
+            <i class="jos" id="jos"></i>
+            <div class="flex flex-col">
+              <label for="title-edit">Judul</label>
+              <input
+                type="text"
+                placeholder="Masukkan Judul"
+                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                id="title-edit"
+              />
+            </div>
+            <div class="flex flex-col">
+              <label for="author-edit">Penulis</label>
+              <input
+                type="text"
+                placeholder="Masukkan Penulis"
+                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                id="author-edit"
+              />
+            </div>
+            <div class="flex flex-col">
+              <label for="year-edit">Tahun</label>
+              <input
+                type="number"
+                placeholder="Masukkan Tahun"
+                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                id="year-edit"
+                min="1900"
+                max="2100"
+                step="1"
+              />
+            </div>
+            <div class="flex flex-row">
+              <input type="checkbox" value="isRead" id="status-edit" />
+              <label for="status-edit">Selesai Dibaca</label>
+            </div>
+            <input
+              type="submit"
+              class="w-full border rounded h-10 hover:cursor-pointer hover:bg-green-800 hover:text-white transition duration-100"
+              value="Submit"
+              id="submit-edit-btn"
+            />
+          </form>
+        </div>
+      </div>
+      <div
+        id="modalDelete"
+        class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center"
+      >
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Delete Book</h2>
+            <button
+              id="closeModalDelete"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              &times;
+            </button>
+          </div>
+          <p class="mt-4">Are you sure to delete the book?</p>
+          <div class="flex gap-2 w-full h-5">
+            <button
+              class="w-fit p-2 border rounded h-10 hover:cursor-pointer hover:bg-danger-color hover:text-white transition duration-100"
+              id="delete"
+            >
+              Delete
+            </button>
+            <button
+              class="w-fit p-2 border rounded h-10 hover:cursor-pointer hover:bg-gray-800 hover:text-white transition duration-100"
+              id="not-delete"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex md:flex-row flex-col p-4">
+        <article
+          class="w-full border rounded-2xl p-6 m-2 h-fit"
+          id="unread-books"
+        >
+          <h1 class="text-center">Belum Selesai Dibaca</h1>
+        </article>
+        <article
+          class="w-full border rounded-2xl p-6 m-2 h-fit"
+          id="read-books"
+        >
+          <h1 class="text-center">Selesai Dibaca</h1>
+        </article>
+      </div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
