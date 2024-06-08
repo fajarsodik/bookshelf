@@ -103,64 +103,6 @@ function addBookToUnread(bookId) {
   saveData();
 }
 
-function editBook(bookId, title, author, year, isComplete) {
-  // let bookTarget = findBook(bookId);
-  let bookIndex = findBookIndex(bookId);
-  if (bookIndex !== -1) {
-    let titlenya = typeof books[bookIndex].year;
-    console.log(
-      `target ${titlenya} ${bookIndex} ${books[bookIndex]} ${books[bookIndex].isComplete} ${books[bookIndex].title}`
-    );
-    books[bookIndex].title = title;
-    books[bookIndex].author = author;
-    books[bookIndex].year = year;
-    books[bookIndex].isComplete = isComplete;
-    // saveData();
-    // document.dispatchEvent(new Event(RENDER_EVENT));
-  }
-}
-
-function modalEdit(bookId) {
-  const bookTarget = findBook(bookId);
-  let title = document.getElementById("title-edit");
-  let author = document.getElementById("author-edit");
-  let year = document.getElementById("year-edit");
-  let modal = document.getElementById("editBook");
-  let closeModal = document.getElementById("closeModalEdit");
-  let isComplete = document.getElementById("status-edit");
-  let submitEdit = document.getElementById("submit-edit-btn");
-  modal.classList.remove("hidden");
-  author.value = bookTarget.author;
-  title.value = bookTarget.title;
-  year.value = bookTarget.year;
-  if (bookTarget.isComplete) {
-    isComplete.checked = true;
-  } else {
-    isComplete.checked = false;
-  }
-  closeModal.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-  submitEdit.addEventListener("click", () => {
-    console.log("klik submit edit");
-    editBook(
-      bookId,
-      title.value,
-      author.value,
-      parseInt(year.value),
-      isComplete.checked
-    );
-    cleanForm();
-    modal.classList.add("hidden");
-  });
-
-  window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      modal.classList.add("hidden");
-    }
-  });
-}
-
 function deleteBook(bookId) {
   const bookTarget = findBookIndex(bookId);
   if (bookTarget === -1) return;
@@ -208,25 +150,6 @@ function makeBook(bookObject) {
   const cardTitle = document.createElement("h2");
   cardTitle.classList.add("flex", "break-all", "text-balance", "w-5/6");
   cardTitle.innerText = title;
-
-  const cardIconAnchor = document.createElement("a");
-  cardIconAnchor.classList.add("inline-flex", "ml-auto", "justify-end");
-  cardIconAnchor.setAttribute("href", "#");
-  cardIconAnchor.setAttribute("id", "edit-book");
-  cardIconAnchor.addEventListener("click", () => {
-    modalEdit(id);
-  });
-
-  const cardIcon = document.createElement("i");
-  cardIcon.classList.add(
-    "fas",
-    "fa-pen",
-    "hover:bg-blue-800",
-    "hover:text-white",
-    "p-2",
-    "rounded"
-  );
-  cardIcon.setAttribute("id", id);
 
   const cardWriter = document.createElement("p");
   cardWriter.innerText = `Penulis: ${author}`;
@@ -281,8 +204,6 @@ function makeBook(bookObject) {
   cardAction.append(cardStatusBookBtn);
   cardAction.append(cardDeleteBookBtn);
   cardTitleContainer.append(cardTitle);
-  // cardTitleContainer.append(cardIconAnchor);
-  cardIconAnchor.append(cardIcon);
   cardBook.append(cardTitleContainer);
   cardBook.append(cardWriter);
   cardBook.append(cardYear);
@@ -307,6 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let modal = document.getElementById("addBook");
   let search = document.getElementById("searchButton");
   let searchInput = document.getElementById("searchBox");
+  let alertMessage = document.getElementById("alert-message");
 
   search.addEventListener("click", () => {
     sessionStorage.setItem(SESSION_TITLE, searchInput.value);
@@ -319,16 +241,26 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   closeModal.onclick = function () {
     modal.classList.add("hidden");
+    alertMessage.classList.add("hidden");
   };
   window.addEventListener("click", (event) => {
     if (event.target === modal) {
       modal.classList.add("hidden");
+      alertMessage.classList.add("hidden");
     }
   });
 
   submitBook.addEventListener("click", function () {
-    addBook();
-    modal.classList.add("hidden");
+    let title = document.getElementById("title").value;
+    let author = document.getElementById("author").value;
+    let year = document.getElementById("year").value;
+    if (title === "" || author === "" || year === "") {
+      alertMessage.classList.remove("hidden");
+    } else {
+      addBook();
+      modal.classList.add("hidden");
+      alertMessage.classList.add("hidden");
+    }
   });
 });
 
